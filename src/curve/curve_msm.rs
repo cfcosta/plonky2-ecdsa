@@ -2,7 +2,7 @@ use alloc::vec::Vec;
 
 use itertools::Itertools;
 use plonky2::field::types::{Field, PrimeField};
-use plonky2_maybe_rayon::*;
+use rayon::prelude::*;
 
 use crate::curve::curve_summation::affine_multisummation_best;
 use crate::curve::curve_types::{AffinePoint, Curve, ProjectivePoint};
@@ -30,11 +30,13 @@ pub fn msm_precompute<C: Curve>(
     generators: &[ProjectivePoint<C>],
     w: usize,
 ) -> MsmPrecomputation<C> {
+    #[cfg(feature = "parallel")]
+    let iter = generators.into_par_iter();
+    #[cfg(not(feature = "parallel"))]
+    let iter = generators.par_iter();
+
     MsmPrecomputation {
-        powers_per_generator: generators
-            .into_par_iter()
-            .map(|&g| precompute_single_generator(g, w))
-            .collect(),
+        powers_per_generator: iter.map(|&g| precompute_single_generator(g, w)).collect(),
         w,
     }
 }
