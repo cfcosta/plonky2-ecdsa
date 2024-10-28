@@ -1,5 +1,3 @@
-use alloc::vec::Vec;
-
 use itertools::Itertools;
 use plonky2::field::types::{Field, PrimeField};
 use rayon::prelude::*;
@@ -189,7 +187,6 @@ pub(crate) fn to_digits<C: Curve>(x: &C::ScalarField, w: usize) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
-    use alloc::vec;
 
     use num::BigUint;
     use plonky2::field::secp256k1_scalar::Secp256K1Scalar;

@@ -1,5 +1,3 @@
-use alloc::vec::Vec;
-
 use num::BigUint;
 use plonky2::field::extension::Extendable;
 use plonky2::field::types::Field;

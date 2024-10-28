@@ -1,4 +1,3 @@
-use alloc::vec::Vec;
 use core::ops::Mul;
 
 use plonky2::field::types::{Field, PrimeField};
